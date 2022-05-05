@@ -1,0 +1,24 @@
+{
+  "name": "todo-backend",
+  "version": "1.0.0",
+  "description": "Todo app backend for CRUD operations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chandrakant07-da/todo-backend.git"
+  },
+  "author": "Chandra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Chandrakant07-da/todo-backend/issues"
+  },
+  "homepage": "https://github.com/Chandrakant07-da/todo-backend#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "mongoose": "^6.3.2",
+    "nodemon": "^2.0.16"
+  }
+}

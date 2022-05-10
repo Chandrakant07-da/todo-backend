@@ -8,7 +8,7 @@ const apiroute = require('./routes/api_route')
 const app = express()
 
 // Setup Server Port
-const port = 8085
+const port = 8080
 app.use(express.json()) // Set Content Type to JSON
 
 // Send Message for your localhost
@@ -17,7 +17,7 @@ app.use('/', apiroute)
  
 
 
-const url = "mongodb+srv://chandra:Chandra1998#@cluster0.xtbl1.mongodb.net/Kellton-Ecommerce?retryWrites=true&w=majority"
+const url = "mongodb+srv://chandra:Chandra123#@cluster0.xtbl1.mongodb.net/Kellton-Ecommerce?retryWrites=true&w=majority"
 
 mongoose.connect(url,{useNewUrlParser:true})
 .then(() => {

@@ -8,6 +8,7 @@ exports.addTodo = (req, res) => {
   const todo = new TodoModel({
     todoName: req.body.todoName,
     todoDescription: req.body.todoDescription,
+    id: req.body.id,
   });
   todo
     .save()
@@ -28,7 +29,7 @@ exports.getTodo = (req, res) => {
 };
 
 exports.deleteTodo = (req, res) => {
-  TodoModel.deleteOne({ _id: req.params.id }, (error) => {
+  TodoModel.deleteOne({ id: req.params.id }, (error) => {
     if (error) {
       res.send(error);
     }
@@ -40,14 +41,14 @@ exports.deleteTodo = (req, res) => {
 };
 
 exports.modifyTodo = (req, res) => {
-  TodoModel.findById(req.params.id, (error, todo) => {
+  TodoModel.findOne({ id: req.params.id }, (error, todo) => {
     if (error) {
       res.send(error);
     }
-    (todo.todoName = req.body.todoName ? req.body.todoName : todo.todoName),
-      (todo.todoDescription = req.body.todoDescription
-        ? req.body.todoDescription
-        : todo.todoDescription);
+    todo.todoName = req.body.todoName ? req.body.todoName : todo.todoName;
+    todo.todoDescription = req.body.todoDescription
+      ? req.body.todoDescription
+      : todo.todoDescription;
     todo.save((error) => {
       if (error) {
         res.send(error);

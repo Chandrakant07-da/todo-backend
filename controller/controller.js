@@ -1,62 +1,70 @@
-const TodoModel = require("../models/TodoModel");
+const todoModule = require('../model/todo-module')
 
-exports.showIndex = (req, res) => {
-  res.send("Running Node API");
-};
+exports.showIndex = (req,res) =>{
+    res.send("running node api")
+}
 
-exports.addTodo = (req, res) => {
-  const todo = new TodoModel({
-    todoName: req.body.todoName,
-    todoDescription: req.body.todoDescription,
-    id: req.body.id,
-  });
-  todo
-    .save()
-    .then((data) => res.send(data))
-    .catch((error) => res.send(error));
-};
 
-exports.showTodos = (req, res) => {
-  TodoModel.find()
-    .then((result) => res.send(result))
-    .catch((error) => res.status(400).send(error));
-};
+exports.addAllToDo = (req,res) =>{
+    const post = new todoModule({
+        todoName:req.body.todoName,
+        todoDescription:req.body.todoDescription,
+    })
 
-exports.getTodo = (req, res) => {
-  TodoModel.findById(req.params.id)
-    .then((result) => res.send(result))
-    .catch((error) => res.send(error));
-};
+    post.save()
+    .then(data =>{res.send(data)})
+    .catch(err =>{res.send(err)})
+}
 
-exports.deleteTodo = (req, res) => {
-  TodoModel.deleteOne({ id: req.params.id }, (error) => {
-    if (error) {
-      res.send(error);
-    }
-    res.json({
-      status: "Success",
-      message: "Successfully deleted todo " + req.params.id,
-    });
-  });
-};
+exports.showAllToDo = (req,res) =>{
+    todoModule.find()
+    .then(result =>{
+        res.send(result)
+    })
+    .catch(err =>{
+        res.status(400).send(err)
+    })
+}
 
-exports.modifyTodo = (req, res) => {
-  TodoModel.findOne({ id: req.params.id }, (error, todo) => {
-    if (error) {
-      res.send(error);
-    }
-    todo.todoName = req.body.todoName ? req.body.todoName : todo.todoName;
-    todo.todoDescription = req.body.todoDescription
-      ? req.body.todoDescription
-      : todo.todoDescription;
-    todo.save((error) => {
-      if (error) {
-        res.send(error);
-      }
-      res.json({
-        message: "Todo updated successfully",
-        data: todo,
-      });
-    });
-  });
-};
+exports.viewAToDo = (req,res) => {
+    todoModule.findById(req.params.id)
+    .then(result => {
+        res.send(result)
+    })
+    .catch(err => {
+        res.send(err)
+    })
+}
+
+
+exports.modifyToDo = (req,res) =>{
+    todoModule.findById(req.params.id , (err,todo)=>{
+        if(err)
+        res.send(err)
+        todo.todoName = req.body.todoName ? req.body.todoName : todo.todoName
+        todo.todoDescription = req.body.todoDescription ? req.body.todoDescription : todo.todoDescription
+
+        todo.save((err) => {
+            if(err)
+            res.send(err)
+            res.json({
+                message: 'TODO UPDATED SUCCESSFULLY',
+                data: todo
+            })
+        })
+    })
+}
+
+exports.deleteToDo = (req,res) =>{
+    todoModule.deleteOne({
+        _id:req.params.id
+    }, (err) =>{
+        if(err)
+        res.send(err)
+
+        res.json({
+            status : "Success",
+            message : `successfully deleted ToDo: ${req.params.id}`
+        })
+    })
+}

@@ -1,4 +1,34 @@
-// Libraries
+const express = require('express')
+const apirouter = require('./routes/api-routes')
+const mongoose = require('mongoose')
+const cors = require('cors')
+
+const app = express()
+
+const port = 8080
+app.use(express.json(), cors())
+
+
+app.use('/',apirouter)
+
+const url = "mongodb+srv://chandra:Chandra123@cluster0.xtbl1.mongodb.net/Todo?retryWrites=true&w=majority"
+
+
+mongoose.connect(url , {useNewUrlParser:true})
+.then(()=>{
+    console.log("database connected")
+})
+.catch((err) => console.log(err))
+
+app.listen(8080, () =>{
+    console.log(`database is running on http://localhost:${port}`)
+})
+
+
+
+
+
+{/*// Libraries
 // Import Express: 
 // => Initiates the server
 // => routing for API URL(GET,POST)
@@ -48,6 +78,9 @@ mongoose
 
 // Creating a server at Port : 3000
 // From frontend the requests we are listening to it
-app.listen(3000, () => {
+app.listen(8080, () => {
   console.log("App listening on port 3000");
 });
+
+*/}
+
